@@ -1,5 +1,7 @@
 use std::fs;
 use std::fs::File;
+use std::path;
+use std::path::PathBuf;
 use std::env;
 
 fn main() {
@@ -10,4 +12,7 @@ fn main() {
     }
 
     println!("{:?}", args);
+
+    let p = PathBuf::from(&args[1]);
+    println!("{:?}", fs::canonicalize(&p));
 }
