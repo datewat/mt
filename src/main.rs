@@ -4,6 +4,7 @@ use std::path;
 use std::path::PathBuf;
 use std::env;
 use std::path::Path;
+use chrono;
 
 fn main() {
     let args : Vec<String> = env::args().collect();
@@ -12,10 +13,19 @@ fn main() {
         panic!("Too many or too little arguments provided.\nUsage: 'mt <file/dir>'");
     }
 
-    println!("{:?}", args);
-
-    let p = PathBuf::from(&args[1]);
+    let p : PathBuf = PathBuf::from(&args[1]);
     if !(Path::new(&p).exists()) {
         panic!("File '{}' does not exist", args[1]);
     }
+
+    generate_trashinfo_file(p);
+
+    //date format: yyyy-mm-ddThh:mm:53
+}
+
+fn generate_trashinfo_file(file : PathBuf) {
+    //date format: yyyy-mm-ddThh:mm:53
+    let date = chrono::offset::Local::now();
+
+    println!("{:?}", date);
 }
