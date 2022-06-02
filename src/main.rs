@@ -19,13 +19,11 @@ fn main() {
         panic!("File '{}' does not exist", args[1]);
     }
 
-    generate_trashinfo_file(p);
-
-    //date format: yyyy-mm-ddThh:mm:53
+    generate_trash_info_file(p);
 }
 
-fn generate_trashinfo_file(file : PathBuf) {
-    //date format: yyyy-mm-ddThh:mm:53
+fn generate_trash_info_file(file : PathBuf) {
+    //date format: yyyy-mm-ddThh:mm:ss
     let date = chrono::offset::Local::now();
 
     println!("{:?}", date);
