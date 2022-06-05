@@ -47,5 +47,4 @@ fn fill_trash_info(mut file: File, path: PathBuf) {
     file.write_all(first_line.as_bytes());
     file.write_all(second_line.as_bytes());
     file.write_all(third_line.as_bytes());
-
 }
