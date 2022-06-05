@@ -27,7 +27,7 @@ fn generate_trash_info_file(file: PathBuf) {
     let trash_info = File::create(trashinfo_file_name);
     println!("{} file created", trashinfo_file_name);
 
-    fill_trash_info(trash_info);
+    fill_trash_info(trash_info.unwrap());
 }
 
 fn fill_trash_info(file: File) {
