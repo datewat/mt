@@ -1,4 +1,4 @@
-use std::{fs, fs::File, path::{Path, PathBuf}, env};
+use std::{fs, fs::File, path::{Path, PathBuf}, env, io::{Write,stdin,stdout}};
 use chrono::Local;
 
 fn main() {
@@ -30,11 +30,15 @@ fn generate_trash_info_file(file: PathBuf) {
     fill_trash_info(trash_info.unwrap());
 }
 
-fn fill_trash_info(file: File) {
+fn fill_trash_info(mut file: File) {
     //date format: yyyy-mm-ddThh:mm:ss
     let date = Local::now().format("%Y-%m-%dT%H:%M:%S");
 
-    let first_line = "[Trash Info]";
-    let second_line = format!("Path=");
-    let third_line = format!("DeletionDate={}", date);
+    let first_line= "[Trash Info]\n";
+    let second_line = format!("Path=\n");
+    let third_line = format!("DeletionDate={}\n", date);
+
+    file.write_all(first_line.as_bytes());
+    file.write_all(second_line.as_bytes());
+    file.write_all(third_line.as_bytes());
 }
