@@ -1,5 +1,6 @@
 use std::{fs, fs::File, path::{Path, PathBuf}, env, io::Write};
 use chrono::Local;
+use clap::Parser;
 
 fn main() {
     let args : Vec<String> = env::args().collect();
