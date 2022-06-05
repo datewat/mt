@@ -1,4 +1,4 @@
-use std::{fs, fs::File, path::{Path, PathBuf}, env, io::{Write,stdin,stdout}};
+use std::{fs, fs::File, path::{Path, PathBuf}, env, io::Write};
 use chrono::Local;
 
 fn main() {
@@ -41,4 +41,10 @@ fn fill_trash_info(mut file: File) {
     file.write_all(first_line.as_bytes());
     file.write_all(second_line.as_bytes());
     file.write_all(third_line.as_bytes());
+
+    let key = "HOME";
+
+    let _homedir = env::var_os(key).unwrap();
+    let homedir = _homedir.to_str().unwrap();
+    println!("{}", homedir);
 }
