@@ -27,24 +27,25 @@ fn generate_trash_info_file(file: PathBuf) {
     let trash_info = File::create(trashinfo_file_name);
     println!("{} file created", trashinfo_file_name);
 
-    fill_trash_info(trash_info.unwrap());
+    fill_trash_info(trash_info.unwrap(), file);
 }
 
-fn fill_trash_info(mut file: File) {
+fn fill_trash_info(mut file: File, path: PathBuf) {
     //date format: yyyy-mm-ddThh:mm:ss
     let date = Local::now().format("%Y-%m-%dT%H:%M:%S");
 
+    let _homedir = env::var_os("HOME").unwrap();
+    let homedir = _homedir.to_str().unwrap();
+
+    let _pwd = env::var_os("PWD").unwrap();
+    let pwd = _pwd.to_str().unwrap();
+
     let first_line= "[Trash Info]\n";
-    let second_line = format!("Path=\n");
-    let third_line = format!("DeletionDate={}\n", date);
+    let second_line = format!("Path={}\n", format!("{pwd}/{}", path.display()));
+    let third_line = format!("DeletionDate={}", date);
 
     file.write_all(first_line.as_bytes());
     file.write_all(second_line.as_bytes());
     file.write_all(third_line.as_bytes());
 
-    let key = "HOME";
-
-    let _homedir = env::var_os(key).unwrap();
-    let homedir = _homedir.to_str().unwrap();
-    println!("{}", homedir);
 }
