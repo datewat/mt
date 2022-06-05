@@ -13,33 +13,33 @@ fn main() {
         panic!("File '{}' does not exist", args[1]);
     }
 
-    generate_trash_info_file(p);
+    let _homedir = env::var_os("HOME").unwrap();
+    let homedir = _homedir.to_str().unwrap();
+
+    generate_trash_info_file(&p, &homedir);
+
+    move_file_to_trash(&p, &homedir)
 }
 
-fn move_file_to_trash() {
-
+fn move_file_to_trash(file: &PathBuf, homedir: &str) {
+    fs::rename(file, format!("{homedir}/.local/share/Trash/files/{}", file.display()));
 }
 
-fn generate_trash_info_file(file: PathBuf) {
+fn generate_trash_info_file(file: &PathBuf, homedir: &str) {
     let trashinfo_file_name: &String= &format!("{}.trashinfo", file.display());
 
     if fs::metadata(trashinfo_file_name).is_ok() {
-        println!("{} file exists", trashinfo_file_name);
         return;
     }
 
     let trash_info = File::create(trashinfo_file_name);
-    println!("{} file created", trashinfo_file_name);
-
-    let _homedir = env::var_os("HOME").unwrap();
-    let homedir = _homedir.to_str().unwrap();
 
     fill_trash_info(trash_info.as_ref().unwrap(), file);
 
-    move_trash_info(PathBuf::from(trashinfo_file_name), trash_info.unwrap(), homedir);
+    move_trash_info(PathBuf::from(trashinfo_file_name), homedir);
 }
 
-fn fill_trash_info(mut file: &File, path: PathBuf) {
+fn fill_trash_info(mut file: &File, path: &PathBuf) {
     //date format: yyyy-mm-ddThh:mm:ss
     let date = Local::now().format("%Y-%m-%dT%H:%M:%S");
 
@@ -55,7 +55,7 @@ fn fill_trash_info(mut file: &File, path: PathBuf) {
     file.write_all(third_line.as_bytes());
 }
 
-fn move_trash_info(path: PathBuf, file: File, hdir: &str) {
+fn move_trash_info(path: PathBuf, hdir: &str) {
     let t_path = format!("{hdir}/.local/share/Trash/info/{}", path.display());
     fs::rename(path, t_path);
 }
