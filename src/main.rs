@@ -1,17 +1,15 @@
+mod args;
 use std::{fs, fs::File, path::{Path, PathBuf}, env, io::Write};
 use chrono::Local;
+use args::Arguments;
 use clap::Parser;
 
 fn main() {
-    let args : Vec<String> = env::args().collect();
+    let args = Arguments::parse();
 
-    if args.len() != 2 {
-        panic!("Too many or too little arguments provided.\nUsage: 'mt <file/dir>'");
-    }
-
-    let p : PathBuf = PathBuf::from(&args[1]);
+    let p : PathBuf = PathBuf::from(&args.file);
     if !(Path::new(&p).exists()) {
-        panic!("File '{}' does not exist", args[1]);
+        panic!("File '{}' does not exist", args.file);
     }
 
     let _homedir = env::var_os("HOME").unwrap();
