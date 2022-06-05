@@ -28,6 +28,8 @@ fn generate_trash_info_file(file: PathBuf) {
     println!("{} file created", trashinfo_file_name);
 
     fill_trash_info(trash_info.unwrap(), file);
+
+    move_trash_info(PathBuf::from(trashinfo_file_name));
 }
 
 fn fill_trash_info(mut file: File, path: PathBuf) {
@@ -47,4 +49,9 @@ fn fill_trash_info(mut file: File, path: PathBuf) {
     file.write_all(first_line.as_bytes());
     file.write_all(second_line.as_bytes());
     file.write_all(third_line.as_bytes());
+
+}
+
+fn move_trash_info(file: PathBuf) {
+
 }
