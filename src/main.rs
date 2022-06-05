@@ -1,11 +1,7 @@
-use std::fs;
-use std::fs::File;
-use std::path;
 use std::path::PathBuf;
 use std::env;
 use std::path::Path;
-use chrono;
-use clap::Parser;
+use chrono::Local;
 
 fn main() {
     let args : Vec<String> = env::args().collect();
@@ -24,7 +20,7 @@ fn main() {
 
 fn generate_trash_info_file(file : PathBuf) {
     //date format: yyyy-mm-ddThh:mm:ss
-    let date = chrono::offset::Local::now();
+    let date = Local::now().format("%Y-%m-%dT%H:%M:%S");
 
-    println!("{:?}", date);
+    println!("{}", date);
 }
