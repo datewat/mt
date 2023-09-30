@@ -21,7 +21,7 @@ fn main() {
 }
 
 fn move_file_to_trash(file: &PathBuf, homedir: &str) {
-    fs::rename(file, format!("{homedir}/.local/share/Trash/files/{}", file.display()));
+    let _ = fs::rename(file, format!("{homedir}/.local/share/Trash/files/{}", file.display()));
 }
 
 fn generate_trash_info_file(file: &PathBuf, homedir: &str) {
@@ -49,12 +49,12 @@ fn fill_trash_info(mut file: &File, path: &PathBuf) {
     let second_line = format!("Path={}\n", format!("{pwd}/{}", path.display()));
     let third_line = format!("DeletionDate={}", date);
 
-    file.write_all(first_line.as_bytes());
-    file.write_all(second_line.as_bytes());
-    file.write_all(third_line.as_bytes());
+    let _ = file.write_all(first_line.as_bytes());
+    let _ = file.write_all(second_line.as_bytes());
+    let _ = file.write_all(third_line.as_bytes());
 }
 
 fn move_trash_info(path: PathBuf, hdir: &str) {
     let t_path = format!("{hdir}/.local/share/Trash/info/{}", path.display());
-    fs::rename(path, t_path);
+    let _ = fs::rename(path, t_path);
 }
