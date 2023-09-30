@@ -5,6 +5,11 @@ use args::Arguments;
 use clap::Parser;
 
 fn main() {
+    // what do do, if trash folder does not exist?
+    
+    // trash specification: https://specifications.freedesktop.org/trash-spec/trashspec-1.0.html
+
+
     let args = Arguments::parse();
 
     let p : PathBuf = PathBuf::from(&args.file);
